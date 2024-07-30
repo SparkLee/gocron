@@ -82,6 +82,22 @@ func Remove(ctx *macaron.Context) string {
 	return json.Success("删除成功", nil)
 }
 
+// 删除N天前执行成功的日志（保留失败日志以便查问题）
+func RemoveV2(ctx *macaron.Context) string {
+	days := ctx.ParamsInt(":id")
+	json := utils.JsonResponse{}
+	if days <= 0 {
+		return json.CommonFailure("参数需大于0")
+	}
+	taskLogModel := new(models.TaskLog)
+	_, err := taskLogModel.RemoveV2(days)
+	if err != nil {
+		return json.CommonFailure("删除失败", err)
+	}
+
+	return json.Success("删除成功", nil)
+}
+
 // 解析查询参数
 func parseQueryParams(ctx *macaron.Context) models.CommonMap {
 	var params models.CommonMap = models.CommonMap{}

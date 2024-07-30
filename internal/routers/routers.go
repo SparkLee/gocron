@@ -131,6 +131,9 @@ func Register(m *macaron.Macaron) {
 		m.Post("/task/enable/:id", task.Enable)
 		m.Post("/task/disable/:id", task.Disable)
 	}, apiAuth)
+	m.Group("/v2", func() {
+		m.Post("/tasklog/remove/:id", tasklog.RemoveV2)
+	}, apiAuth)
 
 	// 404错误
 	m.NotFound(func(ctx *macaron.Context) string {
