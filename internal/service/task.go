@@ -212,8 +212,8 @@ type Handler interface {
 // HTTP任务
 type HTTPHandler struct{}
 
-// http任务执行时间不超过300秒
-const HttpExecTimeout = 300
+// http任务执行时间不超过3000秒
+const HttpExecTimeout = 3000
 
 func (h *HTTPHandler) Run(taskModel models.Task, taskUniqueId int64) (result string, err error) {
 	if taskModel.Timeout <= 0 || taskModel.Timeout > HttpExecTimeout {
@@ -456,7 +456,7 @@ func SendNotification(taskModel models.Task, taskResult TaskResult) {
 		"output":           taskResult.Result,
 		"status":           statusName,
 		"task_id":          taskModel.Id,
-		"remark":  			taskModel.Remark,
+		"remark":           taskModel.Remark,
 	}
 	notify.Push(msg)
 }
