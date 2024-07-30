@@ -77,7 +77,7 @@
         <el-table-column
           prop="name"
           label="任务名称"
-        width="180">
+        width="400">
         </el-table-column>
         <el-table-column
           prop="protocol"

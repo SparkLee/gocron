@@ -118,7 +118,7 @@
       <el-table-column
         prop="name"
         label="任务名称"
-      width="150">
+      width="400">
       </el-table-column>
       <el-table-column
         prop="tag"
