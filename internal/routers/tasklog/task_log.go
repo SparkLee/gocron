@@ -83,14 +83,14 @@ func Remove(ctx *macaron.Context) string {
 }
 
 // 删除N天前执行成功的日志（保留失败日志以便查问题）
-func RemoveV2(ctx *macaron.Context) string {
+func RemoveByDays(ctx *macaron.Context) string {
 	days := ctx.ParamsInt(":id")
 	json := utils.JsonResponse{}
 	if days <= 0 {
 		return json.CommonFailure("参数需大于0")
 	}
 	taskLogModel := new(models.TaskLog)
-	_, err := taskLogModel.RemoveV2(days)
+	_, err := taskLogModel.RemoveByDays(days)
 	if err != nil {
 		return json.CommonFailure("删除失败", err)
 	}

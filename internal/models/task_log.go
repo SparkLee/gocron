@@ -73,7 +73,7 @@ func (taskLog *TaskLog) Remove(id int) (int64, error) {
 }
 
 // 删除N天前执行成功的日志（保留失败日志以便查问题）
-func (taskLog *TaskLog) RemoveV2(id int) (int64, error) {
+func (taskLog *TaskLog) RemoveByDays(id int) (int64, error) {
 	t := time.Now().AddDate(0, 0, -id)
 	return Db.Where("status = 2 AND start_time <= ?", t.Format(DefaultTimeFormat)).Delete(taskLog)
 }
