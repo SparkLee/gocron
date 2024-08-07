@@ -9,6 +9,10 @@ export default {
     httpClient.post('/task/log/clear', {}, callback)
   },
 
+  delFailed (callback) {
+    httpClient.post('/task/log/delFailed', {}, callback)
+  },
+
   stop (id, taskId, callback) {
     httpClient.post('/task/log/stop', {id, task_id: taskId}, callback)
   }

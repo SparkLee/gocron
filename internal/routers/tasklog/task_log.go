@@ -42,6 +42,18 @@ func Clear(ctx *macaron.Context) string {
 	return json.Success(utils.SuccessContent, nil)
 }
 
+// 删除失败日志
+func DelFailed(ctx *macaron.Context) string {
+	taskLogModel := new(models.TaskLog)
+	_, err := taskLogModel.DelFailed()
+	json := utils.JsonResponse{}
+	if err != nil {
+		return json.CommonFailure(utils.FailureContent)
+	}
+
+	return json.Success(utils.SuccessContent, nil)
+}
+
 // 停止运行中的任务
 func Stop(ctx *macaron.Context) string {
 	id := ctx.QueryInt64("id")

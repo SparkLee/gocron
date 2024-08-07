@@ -87,6 +87,7 @@ func Register(m *macaron.Macaron) {
 		m.Get("", task.Index)
 		m.Get("/log", tasklog.Index)
 		m.Post("/log/clear", tasklog.Clear)
+		m.Post("/log/delFailed", tasklog.DelFailed)
 		m.Post("/log/stop", tasklog.Stop)
 		m.Post("/remove/:id", task.Remove)
 		m.Post("/enable/:id", task.Enable)

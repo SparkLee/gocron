@@ -33,8 +33,11 @@
         </el-form-item>
       </el-form>
       <el-row type="flex" justify="end">
-        <el-col :span="3">
-          <el-button type="danger" v-if="this.$store.getters.user.isAdmin" @click="clearLog">清空日志</el-button>
+        <el-col :span="2">
+          <el-button type="danger" v-if="this.$store.getters.user.isAdmin" @click="clearLog">清空全部日志</el-button>
+        </el-col>
+        <el-col :span="2">
+          <el-button type="warning" v-if="this.$store.getters.user.isAdmin" @click="delFailedLog">删除失败日志</el-button>
         </el-col>
         <el-col :span="2">
           <el-button type="info" @click="refresh">刷新</el-button>
@@ -86,7 +89,7 @@
         </el-table-column>
         <el-table-column
           label="任务节点"
-          width="150">
+          width="300">
           <template slot-scope="scope">
             <div v-html="scope.row.hostname">{{scope.row.hostname}}</div>
           </template>
@@ -238,6 +241,14 @@ export default {
     clearLog () {
       this.$appConfirm(() => {
         taskLogService.clear(() => {
+          this.searchParams.page = 1
+          this.search()
+        })
+      })
+    },
+    delFailedLog () {
+      this.$appConfirm(() => {
+        taskLogService.delFailed(() => {
           this.searchParams.page = 1
           this.search()
         })

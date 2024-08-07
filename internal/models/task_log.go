@@ -1,6 +1,8 @@
 package models
 
 import (
+	"database/sql"
+	"fmt"
 	"time"
 
 	"github.com/go-xorm/xorm"
@@ -62,8 +64,14 @@ func (taskLog *TaskLog) List(params CommonMap) ([]TaskLog, error) {
 }
 
 // 清空表
-func (taskLog *TaskLog) Clear() (int64, error) {
-	return Db.Where("1=1").Delete(taskLog)
+func (taskLog *TaskLog) Clear() (sql.Result, error) {
+	return Db.Exec(fmt.Sprintf("TRUNCATE TABLE %s", Db.TableName(&TaskLog{})))
+	//return Db.Where("1=1").Delete(taskLog)
+}
+
+// 删除失败日志
+func (taskLog *TaskLog) DelFailed() (int64, error) {
+	return Db.Where("status = 0").Delete(taskLog)
 }
 
 // 删除N个月前的日志
