@@ -43,11 +43,14 @@
           <el-button type="info" @click="refresh">刷新</el-button>
         </el-col>
       </el-row>
+      <!-- page-size: 默认每页展示条数 -->
+      <!-- page-sizes: 可选每页展示条数列表 -->
       <el-pagination
         background
         layout="prev, pager, next, sizes, total"
         :total="logTotal"
-        :page-size="20"
+        :page-size="1"
+        :page-sizes="[1, 2, 3, 5, 10, 20, 30, 40, 50, 100]"
         @size-change="changePageSize"
         @current-change="changePage"
         @prev-click="changePage"
@@ -164,7 +167,7 @@ export default {
       logs: [],
       logTotal: 0,
       searchParams: {
-        page_size: 20,
+        page_size: 1, // 默认每页展示条数（注：2024/08/15 【游品SDK生产-同步抖音get_ecpm接口数据】定时任务打了大量日志，一次性展示10条会因获取的数据过多导致gocron web后台响应超时中断请求而无法展示日志，故每次仅展示1条）
         page: 1,
         task_id: '',
         protocol: '',
